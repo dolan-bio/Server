@@ -1,10 +1,25 @@
 import * as bodyParser from "body-parser";
 import * as compression from "compression";
 import * as express from "express";
+import * as session from "express-session";
 import * as http from "http";
 import * as morgan from "morgan";
 import * as path from "path";
 import * as logger from "winston";
+
+const Grant = require('grant-express');
+const grant = new Grant({
+    "server": {
+        "protocol": "http",
+        "host": "localhost:9000",
+        "state": true,
+    },
+    "linkedin2": {
+        "key": "77jha1j50zl7wa",
+        "secret": "0fTpTGXQz8LiqHwo",
+        "scope": ['r_basicprofile'],
+    },
+});
 
 import { EnvironmentType, IConfig } from "../config";
 
@@ -22,6 +37,8 @@ export class ApplicationWrapper {
         this.app.set("appPath", path.join("", "client"));
         this.app.use(morgan("dev"));
         this.app.use(express.static(this.app.get("appPath")));
+        this.app.use(session({ secret: "grant" }));
+        this.app.use(grant);
 
         this.server = http.createServer(this.app);
     }
