@@ -12,9 +12,9 @@ export class ProfileFetcher {
 
     public connect(res: Response): void {
         console.log(LinkedIn);
-        const authUrl = LinkedIn.auth.authorize(res, SCOPE);
+        const authUrl = LinkedIn.auth.authorize(SCOPE);
         console.log(authUrl);
-        //res.redirect(authUrl);
+        res.redirect(authUrl);
     }
 
     public callback(code: string, state: string): void {
