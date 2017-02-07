@@ -27,6 +27,13 @@ export class LinkedInRouter {
             this.profileFetcher.connect(res);
         });
 
+        this.router.get("/passport", (req: Request, res: Response) => {
+            console.log(req);
+            passport.authenticate('linkedin')(req, res, function () {
+                res.send('cool bro');
+            })
+        });
+
         this.router.get("/phantom", (req: Request, res: Response) => {
             var _ph, _page, _outObj;
 
@@ -37,12 +44,20 @@ export class LinkedInRouter {
                 _page = page;
                 // return _page.open(`https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${CLIENT_ID}&redirect_uri=http%3A%2F%2Flocalhost:9000%2Flinkedin%2Fcallback&state=987654321&scope=r_basicprofile`);
                 // return _page.open(`http://localhost:9000/connect/linkedin2`);
+                page.property('onResourceReceived', function (resource) {
+                    /*if (url == resource.url && resource.redirectURL) {
+                        redirectURL = resource.redirectURL;
+                    }*/
+                    console.log(resource.url);
+                    console.log(resource.redirectURL);
+                });
+
                 return _page.open(`http://localhost:9000/linkedin/login`);
             }).then(status => {
                 console.log(status);
                 return _page.property('content')
             }).then(content => {
-                console.log(content);
+                // console.log(content);
                 _page.evaluate(function () {
                     window.console.log = function (msg) { alert(msg) };
 
@@ -84,6 +99,7 @@ export class LinkedInRouter {
         this.router.get("/login", passport.authenticate('linkedin'), (req: Request, res: Response) => {
             // The request will be redirected to LinkedIn for authentication, so this 
             // function will not be called.
+            res.status(200).send('done');
         });
 
         this.router.get("/callback", (req: Request, res: Response) => {
