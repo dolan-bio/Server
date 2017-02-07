@@ -39,7 +39,9 @@
     "express-session": "^1.15.0",
     "grant-express": "^3.7.0",
     "morgan": "^1.7.0",
+    "node-linkedin": "^0.5.4",
     "passport": "^0.3.2",
+    "passport-linkedin-oauth2": "^1.4.1",
     "phantom": "^4.0.0",
     "request": "^2.79.0",
     "winston": "^2.3.1"
