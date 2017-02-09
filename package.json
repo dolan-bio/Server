@@ -32,7 +32,9 @@
   "dependencies": {
     "@types/express-session": "0.0.32",
     "@types/morgan": "^1.7.32",
+    "@types/nightmare": "^1.6.30",
     "@types/passport": "^0.3.2",
+    "@types/winston": "^2.2.0",
     "body-parser": "^1.16.0",
     "compression": "^1.6.2",
     "express": "^4.14.0",
@@ -43,7 +45,6 @@
     "node-linkedin": "^0.5.4",
     "passport": "^0.3.2",
     "passport-linkedin-oauth2": "^1.4.1",
-    "phantom": "^4.0.0",
     "request": "^2.79.0",
     "winston": "^2.3.1"
   },
