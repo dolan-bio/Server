@@ -31,6 +31,8 @@
   "homepage": "https://github.com/dolanmiu/LoL-LaMetric#readme",
   "dependencies": {
     "@types/express-session": "0.0.32",
+    "@types/moment": "^2.13.0",
+    "@types/mongoose": "^4.7.5",
     "@types/morgan": "^1.7.32",
     "@types/nightmare": "^1.6.30",
     "@types/passport": "^0.3.2",
@@ -40,6 +42,8 @@
     "express": "^4.14.0",
     "express-session": "^1.15.0",
     "grant-express": "^3.7.0",
+    "moment": "^2.17.1",
+    "mongoose": "^4.8.1",
     "morgan": "^1.7.0",
     "nightmare": "^2.9.1",
     "node-linkedin": "^0.5.4",

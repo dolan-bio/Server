@@ -13,7 +13,8 @@ export class LinkedInRouter {
     }
 
     public init(): void {
-        this.router.get("/test", (req: Request, res: Response) => {
+        this.router.get("/profile", (req: Request, res: Response) => {
+            logger.debug("Getting profile");
             this.profileFetcher.connect();
         });
     }

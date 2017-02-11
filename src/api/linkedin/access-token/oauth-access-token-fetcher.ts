@@ -8,7 +8,7 @@ import * as logger from "winston";
 const passport = require("passport");
 const Nightmare = require("nightmare");
 
-export class AuthCodeFetcher {
+export class OAuthAccessTokenFetcher {
     private authCode: string;
     private nightmare: any;
 
