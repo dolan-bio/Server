@@ -8,4 +8,7 @@ declare interface IConfig {
         email: string,
         password: string,
     };
+    github: {
+        token: string,
+    };
 }
