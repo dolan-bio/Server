@@ -9,7 +9,7 @@ export class LinkedInPassportLoader {
             clientID: clientId,
             clientSecret: secret,
             callbackURL: "/linkedin/callback",
-            scope: ["r_basicprofile"],
+            scope: ["r_basicprofile", "r_emailaddress", "rw_company_admin"],
         }, (accessToken, refreshToken, profile, done) => {
             logger.info(profile);
             return done(null, profile);

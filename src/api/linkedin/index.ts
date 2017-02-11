@@ -15,7 +15,12 @@ export class LinkedInRouter {
     public init(): void {
         this.router.get("/profile", (req: Request, res: Response) => {
             logger.debug("Getting profile");
-            this.profileFetcher.connect();
+            this.profileFetcher.connect().then((profile) => {
+                res.status(200).send(profile);
+            }).catch((error) => {
+                logger.error(error);
+                res.status(500).send("Something went wrong. Cannot get profile");
+            });
         });
     }
 }

@@ -6,19 +6,26 @@ const LinkedIn = require("node-linkedin")();
 
 export class ProfileFetcher {
     private accessTokenManager: AccessTokenManager;
-    private authCodePromise: Promise<string>;
+    private accessTokenPromise: Promise<string>;
 
     constructor(router: Router, config: IConfig) {
         this.accessTokenManager = new AccessTokenManager(router, config);
-        this.authCodePromise = this.accessTokenManager.fetch();
+        this.accessTokenPromise = this.accessTokenManager.fetch();
     }
 
-    public connect(): void {
-        this.authCodePromise.then((accessToken) => {
-            logger.info(accessToken);
-            const linkedin = LinkedIn.init(accessToken);
-            linkedin.people.me((err, $in) => {
-                console.log($in);
+    public connect(): Promise<LinkedInProfile> {
+        return new Promise<LinkedInProfile>((resolve, reject) => {
+            this.accessTokenPromise.then((accessToken) => {
+                logger.info(`accessToken: ${accessToken}`);
+                const linkedin = LinkedIn.init(accessToken);
+                linkedin.people.me((err, profile) => {
+                    if (err) {
+                        logger.error(err);
+                        reject(err);
+                        return;
+                    }
+                    resolve(profile);
+                });
             });
         });
     }

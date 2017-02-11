@@ -10,10 +10,8 @@ const Nightmare = require("nightmare");
 
 export class OAuthAccessTokenFetcher {
     private authCode: string;
-    private nightmare: any;
 
     constructor(router: Router, private config: IConfig) {
-        this.nightmare = new Nightmare();
         router.get("/login", passport.authenticate("linkedin", { state: "dolan" }));
 
         router.get("/callback", (req: Request, res: Response) => {
@@ -25,7 +23,8 @@ export class OAuthAccessTokenFetcher {
 
     public fetch(): Promise<string> {
         return new Promise<string>((resolve, reject) => {
-            this.nightmare
+            const nightmare = new Nightmare();
+            nightmare
                 .goto(`${this.config.baseUrl}/linkedin/login`)
                 .insert("#session_key-oauth2SAuthorizeForm", this.config.linkedIn.email)
                 .insert("#session_password-oauth2SAuthorizeForm", this.config.linkedIn.password)
