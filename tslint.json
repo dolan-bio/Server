@@ -31,8 +31,11 @@
     "max-line-length": [
       false
     ],
-    "no-unused-variable": [
-      true
+    "no-console": [
+      false
+    ],
+    "array-type": [
+      "array"
     ]
   }
 }
