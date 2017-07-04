@@ -1,7 +1,7 @@
 {
-  "name": "lol-lametric",
+  "name": "server",
   "version": "1.0.0",
-  "description": "Leage of Legends LaMetric app",
+  "description": "Server for dolan.bio",
   "main": "dist/index.js",
   "scripts": {
     "pretest": "tsc --p .",
@@ -13,22 +13,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dolanmiu/LoL-LaMetric.git"
+    "url": "git+https://github.com/dolan-bio/Server.git"
   },
   "keywords": [
-    "LaMetric",
-    "League",
-    "of",
-    "legends",
-    "LoL",
-    "stats"
+    "dolan.bio"
   ],
   "author": "Dolan Miu",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/dolanmiu/LoL-LaMetric/issues"
+    "url": "https://github.com/dolan-bio/Server/issues"
   },
-  "homepage": "https://github.com/dolanmiu/LoL-LaMetric#readme",
+  "homepage": "https://github.com/dolan-bio/Server#readme",
   "dependencies": {
     "@types/express-session": "1.15.0",
     "@types/github": "7.1.0",
