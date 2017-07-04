@@ -30,8 +30,8 @@
   },
   "homepage": "https://github.com/dolanmiu/LoL-LaMetric#readme",
   "dependencies": {
-    "@types/express-session": "0.0.32",
-    "@types/github": "0.0.0",
+    "@types/express-session": "1.15.0",
+    "@types/github": "7.1.0",
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^4.7.5",
     "@types/morgan": "^1.7.32",
