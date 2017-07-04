@@ -21,6 +21,4 @@ appWrapper.configure((app) => {
     app.use("/github", new GitHubRouter(config).router);
 });
 
-
-
 appWrapper.start();
