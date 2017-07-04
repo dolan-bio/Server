@@ -38,3 +38,6 @@ jspm_packages
 
 # Build
 dist
+
+# VS Code
+.vscode
