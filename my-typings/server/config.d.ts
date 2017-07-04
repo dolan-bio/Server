@@ -1,5 +1,5 @@
 declare interface IConfig {
-    port: number;
+    port: string | number;
     baseUrl: string;
     mongoUri: string;
     linkedIn: {

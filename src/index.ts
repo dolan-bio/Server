@@ -4,9 +4,9 @@ import { GitHubRouter } from "./api/github";
 import { LinkedInRouter } from "./api/linkedin";
 import { ApplicationWrapper } from "./bootstrap/application-wrapper";
 import { LinkedInPassportLoader } from "./bootstrap/passport/linkedin";
-import { Config } from "./config/index";
+import { DevelopmentConfig, ProductionConfig } from "./config";
 
-const config = new Config();
+const config = process.env.NODE_ENV === undefined || process.env.NODE_ENV === "dev" ? DevelopmentConfig : ProductionConfig;
 
 (mongoose as PromiseMongoose).Promise = global.Promise;
 const linkedInPassport = new LinkedInPassportLoader();
