@@ -30,6 +30,12 @@ export class GitHubRouter {
             logger.debug("Getting latest event");
             this.eventsFetcher.WhenFetchedLastEvent.subscribe((data) => {
                 res.status(200).json(data);
+            }, (err) => {
+                logger.error(err);
+                const errorResponse = {
+                    message: "Something went wrong with the server",
+                };
+                res.status(500).send(errorResponse);
             });
         });
 
@@ -37,6 +43,12 @@ export class GitHubRouter {
             logger.debug("Getting profile");
             this.profileFetcher.WhenFetchedContributions.subscribe((data) => {
                 res.status(200).json(data);
+            }, (err) => {
+                logger.error(err);
+                const errorResponse = {
+                    message: "Something went wrong with the server",
+                };
+                res.status(500).send(errorResponse);
             });
         });
     }
