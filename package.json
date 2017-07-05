@@ -43,6 +43,7 @@
     "express": "^4.14.0",
     "express-session": "^1.15.0",
     "github": "^9.2.0",
+    "google-images": "^2.1.0",
     "grant-express": "^3.7.0",
     "moment": "^2.17.1",
     "mongoose": "^4.8.1",

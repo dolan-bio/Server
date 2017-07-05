@@ -1,3 +1,8 @@
+declare interface GoogleSearchConfig {
+    customSearchEngineId: string;
+    apiKey: string;
+}
+
 declare interface IConfig {
     port: string | number;
     baseUrl: string;
@@ -11,4 +16,5 @@ declare interface IConfig {
     github: {
         token: string,
     };
+    googleSearch: GoogleSearchConfig;
 }
