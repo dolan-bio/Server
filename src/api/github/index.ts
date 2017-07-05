@@ -32,7 +32,7 @@ export class GitHubRouter {
                 res.status(200).json(data);
             }, (err) => {
                 logger.error(err);
-                const errorResponse = {
+                const errorResponse: ServerError = {
                     message: "Something went wrong with the server",
                 };
                 res.status(500).send(errorResponse);
@@ -45,7 +45,7 @@ export class GitHubRouter {
                 res.status(200).json(data);
             }, (err) => {
                 logger.error(err);
-                const errorResponse = {
+                const errorResponse: ServerError = {
                     message: "Something went wrong with the server",
                 };
                 res.status(500).send(errorResponse);

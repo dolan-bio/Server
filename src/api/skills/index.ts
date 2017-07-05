@@ -21,7 +21,7 @@ export class SkillsRouter {
                 res.status(200).send(data);
             }, (err) => {
                 logger.error(err);
-                const errorResponse = {
+                const errorResponse: ServerError = {
                     message: "Something went wrong with the server",
                 };
                 res.status(500).send(errorResponse);
