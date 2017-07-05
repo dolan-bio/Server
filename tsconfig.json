@@ -7,7 +7,8 @@
         //"outFile": "../dist/build.js",
         "outDir": "./dist",
         "sourceMap": true,
-        "target": "es6"
+        "target": "es6",
+        "noUnusedLocals": true
     },
     "exclude": [
         "./node_modules"

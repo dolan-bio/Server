@@ -36,6 +36,13 @@
     ],
     "array-type": [
       "array"
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
     ]
   }
 }
