@@ -8,7 +8,7 @@ const AccessTokenSchema = new mongoose.Schema({
 export interface IAccessToken extends mongoose.Document {
     token: string;
     created: Date;
-};
+}
 
 const AccessToken = mongoose.model<IAccessToken>("AccessToken", AccessTokenSchema);
-export { AccessToken }
+export { AccessToken };
