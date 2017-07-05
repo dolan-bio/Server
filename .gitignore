@@ -41,3 +41,6 @@ dist
 
 # VS Code
 .vscode
+
+# Local environment variables
+run.bat
