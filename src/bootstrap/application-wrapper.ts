@@ -4,10 +4,7 @@ import * as express from "express";
 import * as session from "express-session";
 import * as http from "http";
 import * as morgan from "morgan";
-import * as path from "path";
 import * as logger from "winston";
-
-import { EnvironmentType } from "../config";
 
 export class ApplicationWrapper {
     private app: express.Application;
@@ -20,10 +17,12 @@ export class ApplicationWrapper {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
 
-        this.app.set("appPath", path.join("", "client"));
         this.app.use(morgan("dev"));
-        this.app.use(express.static(this.app.get("appPath")));
-        this.app.use(session({ secret: "league" }));
+        this.app.use(session({
+            secret: "league",
+            resave: true,
+            saveUninitialized: true,
+        }));
 
         this.server = http.createServer(this.app);
     }

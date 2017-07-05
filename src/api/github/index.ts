@@ -1,13 +1,13 @@
 import { Request, Response, Router } from "express";
 import * as GitHubApi from "github";
 import * as logger from "winston";
+import { ContributionsFetcher } from "./contributions-fetcher";
 import { EventsFetcher } from "./events-fetcher";
-import { ProfileFetcher } from "./profile-fetcher";
 
 export class GitHubRouter {
     public router: Router;
     private eventsFetcher: EventsFetcher;
-    private profileFetcher: ProfileFetcher;
+    private profileFetcher: ContributionsFetcher;
 
     constructor(config: IConfig) {
         this.router = Router();
@@ -22,21 +22,21 @@ export class GitHubRouter {
         });
 
         this.eventsFetcher = new EventsFetcher(github);
-        this.profileFetcher = new ProfileFetcher(github);
+        this.profileFetcher = new ContributionsFetcher();
     }
 
     public init(): void {
-        this.router.get("/events", (req: Request, res: Response) => {
-            logger.debug("Getting events");
-            this.eventsFetcher.fetch().then((events) => {
-                res.status(200).json(events);
+        this.router.get("/event", (req: Request, res: Response) => {
+            logger.debug("Getting latest event");
+            this.eventsFetcher.WhenFetchedLastEvent.subscribe((data) => {
+                res.status(200).json(data);
             });
         });
 
         this.router.get("/profile", (req: Request, res: Response) => {
             logger.debug("Getting profile");
-            this.profileFetcher.fetch().then((events) => {
-                res.status(200).json(events);
+            this.profileFetcher.WhenFetchedContributions.subscribe((data) => {
+                res.status(200).json(data);
             });
         });
     }

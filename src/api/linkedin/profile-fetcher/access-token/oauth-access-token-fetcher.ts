@@ -3,7 +3,6 @@ import { Request, Response, Router } from "express";
 // import * as passport from "passport";
 import * as request from "request";
 import * as logger from "winston";
-// import { LinkedInAuthenticateOptions } from "passport-linkedin-oauth2";
 
 const passport = require("passport");
 const Nightmare = require("nightmare");
