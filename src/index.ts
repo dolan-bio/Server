@@ -1,6 +1,7 @@
 import * as mongoose from "mongoose";
 import * as logger from "winston";
 
+import { EducationsRouter } from "./api/educations";
 import { ExperiencesRouter } from "./api/experiences";
 import { GitHubRouter } from "./api/github";
 import { ImagesRouter } from "./api/images";
@@ -23,6 +24,7 @@ appWrapper.configure((app) => {
     app.use("/skills", new SkillsRouter(config).router);
     app.use("/images", new ImagesRouter(config).router);
     app.use("/experiences", new ExperiencesRouter(config).router);
+    app.use("/educations", new EducationsRouter(config).router);
 });
 
 appWrapper.start();
