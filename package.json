@@ -54,6 +54,7 @@
     "passport": "^0.3.2",
     "request": "^2.79.0",
     "rxjs": "^5.4.1",
+    "@dolan-bio/tips": "https://github.com/dolan-bio/Tips.git",
     "winston": "^2.3.1"
   },
   "devDependencies": {
