@@ -40,7 +40,7 @@
     "@types/winston": "^2.2.0",
     "body-parser": "^1.16.0",
     "compression": "^1.6.2",
-    "docx": "^2.0.1",
+    "docx": "^2.1.0",
     "express": "^4.14.0",
     "express-session": "^1.15.0",
     "github": "^9.2.0",
