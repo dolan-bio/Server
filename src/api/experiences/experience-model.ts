@@ -1,17 +1,16 @@
 import * as mongoose from "mongoose";
 
-interface IExperienceDocument extends mongoose.Document {
+export interface IExperienceDate {
+    month: number;
+    year: number;
+}
+
+export interface IExperienceDocument extends mongoose.Document {
     isCurrent: boolean;
     summary: string;
     title: string;
-    endDate: {
-        month: number,
-        year: number,
-    };
-    startDate: {
-        month: number,
-        year: number,
-    };
+    endDate: IExperienceDate;
+    startDate: IExperienceDate;
     company: {
         name: string,
     };
@@ -34,6 +33,4 @@ const ExperienceSchema = new mongoose.Schema({
     },
 });
 
-const Experience = mongoose.model<IExperienceDocument>("Experience", ExperienceSchema);
-
-export { Experience, IExperienceDocument };
+export const Experience = mongoose.model<IExperienceDocument>("Experience", ExperienceSchema);
