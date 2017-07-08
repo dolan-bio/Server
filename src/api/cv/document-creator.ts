@@ -1,7 +1,7 @@
 import * as docx from "docx";
 
 import { IEducationDocument } from "../educations/education-model";
-import { IExperienceDocument } from "../experiences/experience-model";
+import { IExperienceDate, IExperienceDocument } from "../experiences/experience-model";
 
 const PHONE_NUMBER = "07595672701";
 const PROFILE_URL = "https://uk.linkedin.com/dolan1";
@@ -10,19 +10,46 @@ const EMAIL = "dolan+miu@hotmail.com";
 export class DocumentCreator {
 
     public create(data: [IExperienceDocument[], IEducationDocument[]]): docx.Document {
+        const experiences = data[0];
+        const educations = data[1];
         const document = new docx.Document();
         document.addParagraph(new docx.Paragraph("Dolan Miu").title());
 
         document.addParagraph(this.createContactInfo(PHONE_NUMBER, PROFILE_URL, EMAIL));
         document.addParagraph(this.createHeading("Education"));
 
+        for (const education of educations) {
+            document.addParagraph(this.createInstitutionHeader(education.schoolName, `${education.startDate.year} - ${education.endDate.year}`));
+            document.addParagraph(this.createRoleText(`${education.fieldOfStudy} - ${education.degree}`));
+
+            const bulletPoints = this.splitParagraphIntoBullets(education.notes);
+            bulletPoints.forEach((bulletPoint) => {
+                document.addParagraph(this.createBullet(bulletPoint));
+            });
+        }
+
         document.addParagraph(this.createHeading("Experience"));
+
+        for (const position of experiences) {
+            document.addParagraph(this.createInstitutionHeader(position.company.name, this.createPositionDateText(position.startDate, position.endDate, position.isCurrent)));
+            document.addParagraph(this.createRoleText(position.title));
+
+            const bulletPoints = this.splitParagraphIntoBullets(position.summary);
+
+            bulletPoints.forEach((bulletPoint) => {
+                document.addParagraph(this.createBullet(bulletPoint));
+            });
+        }
 
         document.addParagraph(this.createHeading("Skills, Achievements and Interests"));
 
         document.addParagraph(this.createSubHeading("Skills"));
+        document.addParagraph(this.createSkillList([]));
+
         document.addParagraph(this.createSubHeading("Achivements"));
         document.addParagraph(this.createSubHeading("Interests"));
+
+        document.addParagraph(this.createInterests("hello"));
 
         document.addParagraph(this.createHeading("References"));
 
@@ -89,86 +116,125 @@ export class DocumentCreator {
         return paragraph;
     }
 
-    private createInstitutionPair(item: string, description: string, title: string): docx.Paragraph {
-        const paragraph = new docx.Paragraph();
-        const titleText = new docx.TextRun(title).bold();
-        const itemText = new docx.TextRun(item + " - ").tab();
-        const descriptionText = new docx.TextRun(description).italic();
+    // private createInstitutionPair(item: string, description: string, title: string): docx.Paragraph {
+    //     const paragraph = new docx.Paragraph();
+    //     const titleText = new docx.TextRun(title).bold();
+    //     const itemText = new docx.TextRun(item + " - ").tab();
+    //     const descriptionText = new docx.TextRun(description).italic();
 
-        paragraph.leftTabStop(2268);
-        if (title !== undefined) {
-            paragraph.addRun(titleText);
+    //     paragraph.leftTabStop(2268);
+    //     if (title !== undefined) {
+    //         paragraph.addRun(titleText);
+    //     }
+    //     paragraph.addRun(itemText);
+    //     paragraph.addRun(descriptionText);
+
+    //     return paragraph;
+    // }
+
+    private splitParagraphIntoBullets(text: string): string[] {
+        return text.split("\n\n");
+    }
+
+    private createPositionDateText(startDate: IExperienceDate, endDate: IExperienceDate, isCurrent: boolean): string {
+        const startDateText = this.getMonthFromInt(startDate.month) + ". " + startDate.year;
+        const endDateText = isCurrent ? "Present" : `${this.getMonthFromInt(endDate.month)}. ${endDate.year}`;
+
+        return `${startDateText} - ${endDateText}`;
+    }
+
+    private getMonthFromInt(value: number): string {
+        switch (value) {
+            case 1:
+                return "Jan";
+            case 2:
+                return "Feb";
+            case 3:
+                return "Mar";
+            case 4:
+                return "Apr";
+            case 5:
+                return "May";
+            case 6:
+                return "Jun";
+            case 7:
+                return "Jul";
+            case 8:
+                return "Aug";
+            case 9:
+                return "Sept";
+            case 10:
+                return "Oct";
+            case 11:
+                return "Nov";
+            case 12:
+                return "Dec";
         }
-        paragraph.addRun(itemText);
-        paragraph.addRun(descriptionText);
-
-        return paragraph;
     }
 }
 
-function createDocument(profile) {
-    var doc = new docx.Document({
-        creator: 'Dolan Miu',
-        description: 'A generated version of my CV from data straight from LinkedIn',
-        title: 'Dolan Miu CV'
-    }),
-        i;
+// function createDocument(profile) {
+//     var doc = new docx.Document({
+//         creator: 'Dolan Miu',
+//         description: 'A generated version of my CV from data straight from LinkedIn',
+//         title: 'Dolan Miu CV'
+//     }),
+//         i;
 
-    doc.addParagraph(createTitle(profile.formattedName));
-    doc.addParagraph(createContactInfoParagraph(profile.phoneNumbers.values[0].phoneNumber, profile.publicProfileUrl, profile.emailAddress));
-    doc.addParagraph(createSection('Education'));
+//     doc.addParagraph(createTitle(profile.formattedName));
+//     doc.addParagraph(createContactInfoParagraph(profile.phoneNumbers.values[0].phoneNumber, profile.publicProfileUrl, profile.emailAddress));
+//     doc.addParagraph(createSection('Education'));
 
-    profile.educations.values.forEach(function (education) {
-        doc.addParagraph(createInstitutionHeader(education.schoolName, education.startDate.year + ' - ' + education.endDate.year));
-        doc.addParagraph(createRoleText(education.fieldOfStudy + ' - ' + education.degree));
+//     profile.educations.values.forEach(function (education) {
+//         doc.addParagraph(createInstitutionHeader(education.schoolName, education.startDate.year + ' - ' + education.endDate.year));
+//         doc.addParagraph(createRoleText(education.fieldOfStudy + ' - ' + education.degree));
 
-        var bulletPoints = utility.splitParagraphTextIntoBullets(education.notes);
-        bulletPoints.forEach(function (bulletPoint) {
-            doc.addParagraph(createBullet(bulletPoint));
-        });
-    });
+//         var bulletPoints = utility.splitParagraphTextIntoBullets(education.notes);
+//         bulletPoints.forEach(function (bulletPoint) {
+//             doc.addParagraph(createBullet(bulletPoint));
+//         });
+//     });
 
-    doc.addParagraph(createSection('Experience'));
+//     doc.addParagraph(createSection('Experience'));
 
-    profile.positions.values.forEach(function (position) {
-        doc.addParagraph(createInstitutionHeader(position.company.name, utility.createPositionDateText(position.startDate, position.endDate, JSON.parse(position.isCurrent))));
-        doc.addParagraph(createRoleText(position.title));
+//     profile.positions.values.forEach(function (position) {
+//         doc.addParagraph(createInstitutionHeader(position.company.name, utility.createPositionDateText(position.startDate, position.endDate, JSON.parse(position.isCurrent))));
+//         doc.addParagraph(createRoleText(position.title));
 
-        var bulletPoints = utility.splitParagraphTextIntoBullets(position.summary);
+//         var bulletPoints = utility.splitParagraphTextIntoBullets(position.summary);
 
-        bulletPoints.forEach(function (bulletPoint) {
-            doc.addParagraph(createBullet(bulletPoint));
-        });
-    });
+//         bulletPoints.forEach(function (bulletPoint) {
+//             doc.addParagraph(createBullet(bulletPoint));
+//         });
+//     });
 
-    doc.addParagraph(createSection('Skills, Achievements and Interests'));
+//     doc.addParagraph(createSection('Skills, Achievements and Interests'));
 
-    doc.addParagraph(createSubSection('Skills'));
+//     doc.addParagraph(createSubSection('Skills'));
 
-    doc.addParagraph(createSkillList(profile.skills.values));
+//     doc.addParagraph(createSkillList(profile.skills.values));
 
+//     for (i = 0; i < profile.honorsAwards.values.length; i += 1) {
+//         if (i === 0) {
+//             doc.addParagraph(createInstitutionPair(profile.honorsAwards.values[i].issuer, profile.honorsAwards.values[i].name, 'Achievements'));
+//         } else {
+//             doc.addParagraph(createInstitutionPair(profile.honorsAwards.values[i].issuer, profile.honorsAwards.values[i].name));
+//         }
+//     }
 
-    for (i = 0; i < profile.honorsAwards.values.length; i += 1) {
-        if (i === 0) {
-            doc.addParagraph(createInstitutionPair(profile.honorsAwards.values[i].issuer, profile.honorsAwards.values[i].name, 'Achievements'));
-        } else {
-            doc.addParagraph(createInstitutionPair(profile.honorsAwards.values[i].issuer, profile.honorsAwards.values[i].name));
-        }
-    }
+//     for (i = 0; i < profile.volunteer.volunteerExperiences.values.length; i += 1) {
+//         if (i === 0) {
+//             doc.addParagraph(createInstitutionPair(profile.volunteer.volunteerExperiences.values[i].organization.name, profile.volunteer.volunteerExperiences.values[i].role, 'Volunteering'));
+//         } else {
+//             doc.addParagraph(createInstitutionPair(profile.volunteer.volunteerExperiences.values[i].organization.name, profile.volunteer.volunteerExperiences.values[i].role));
+//         }
+//     }
 
-    for (i = 0; i < profile.volunteer.volunteerExperiences.values.length; i += 1) {
-        if (i === 0) {
-            doc.addParagraph(createInstitutionPair(profile.volunteer.volunteerExperiences.values[i].organization.name, profile.volunteer.volunteerExperiences.values[i].role, 'Volunteering'));
-        } else {
-            doc.addParagraph(createInstitutionPair(profile.volunteer.volunteerExperiences.values[i].organization.name, profile.volunteer.volunteerExperiences.values[i].role));
-        }
-    }
+//     doc.addParagraph(createSubSection('Interests'));
 
-    doc.addParagraph(createSubSection('Interests'));
+//     doc.addParagraph(createInterests(profile.interests));
 
-    doc.addParagraph(createInterests(profile.interests));
+//     doc.addParagraph(createSection('References'));
 
-    doc.addParagraph(createSection('References'));
-
-    return doc;
-}
+//     return doc;
+// }
