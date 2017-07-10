@@ -25,11 +25,11 @@
   },
   "homepage": "https://github.com/dolan-bio/Server#readme",
   "dependencies": {
+    "@dolan-bio/tips": "https://github.com/dolan-bio/Tips.git",
     "@types/body-parser": "^1.16.4",
     "@types/compression": "0.0.33",
     "@types/express": "^4.0.36",
     "@types/express-session": "1.15.0",
-    "@types/github": "7.1.0",
     "@types/moment": "^2.13.0",
     "@types/mongoose": "^4.7.5",
     "@types/morgan": "^1.7.32",
@@ -54,7 +54,6 @@
     "passport": "^0.3.2",
     "request": "^2.79.0",
     "rxjs": "^5.4.1",
-    "@dolan-bio/tips": "https://github.com/dolan-bio/Tips.git",
     "winston": "^2.3.1"
   },
   "devDependencies": {
