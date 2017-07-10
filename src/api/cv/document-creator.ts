@@ -4,7 +4,7 @@ import { IEducationDocument } from "../educations/education-model";
 import { IExperienceDate, IExperienceDocument } from "../experiences/experience-model";
 
 const PHONE_NUMBER = "07595672701";
-const PROFILE_URL = "https://uk.linkedin.com/dolan1";
+const PROFILE_URL = "https://www.linkedin.com/in/dolan1/";
 const EMAIL = "dolan+miu@hotmail.com";
 
 export class DocumentCreator {
