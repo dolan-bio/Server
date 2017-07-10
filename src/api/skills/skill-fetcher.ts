@@ -6,7 +6,7 @@ import { ISkillDocument, Skill } from "./skill-model";
 export class SkillsFetcher {
     private whenFetchedSkills: Observable<ISkillDocument[]>;
 
-    constructor(config: GoogleSearchConfig) {
+    constructor() {
         this.whenFetchedSkills = Observable.fromPromise<ISkillDocument[]>(Skill.find());
     }
 

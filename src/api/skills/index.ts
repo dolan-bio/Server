@@ -13,7 +13,7 @@ export class SkillsRouter {
 
     constructor(config: IConfig) {
         this.router = Router();
-        this.skillsFetcher = new SkillsFetcher(config.googleSearch);
+        this.skillsFetcher = new SkillsFetcher();
         this.imageFetcher = new ImageFetcher(config.googleSearch);
 
         this.combinedObservable = this.skillsFetcher.WhenFetchedSkills.flatMap((skills) => {
