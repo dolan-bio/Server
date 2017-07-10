@@ -5,6 +5,8 @@ import * as logger from "winston";
 
 import { EducationsFetcher } from "../educations/educations-fetcher";
 import { ExperiencesFetcher } from "../experiences/experiences-fetcher";
+import { SkillsFetcher } from "../skills/skill-fetcher";
+import { AchievementsFetcher } from "./achievements-fetcher";
 import { DocumentCreator } from "./document-creator";
 
 export class CvRouter {
@@ -12,13 +14,16 @@ export class CvRouter {
     private documentCreator: DocumentCreator;
     private educationsFetcher: EducationsFetcher;
     private experiencesFetcher: ExperiencesFetcher;
+    private skillsFetcher: SkillsFetcher;
+    private achievementsFetcher: AchievementsFetcher;
 
     constructor(config: IConfig) {
         this.router = Router();
         this.documentCreator = new DocumentCreator();
         this.experiencesFetcher = new ExperiencesFetcher();
         this.educationsFetcher = new EducationsFetcher();
-
+        this.skillsFetcher = new SkillsFetcher();
+        this.achievementsFetcher = new AchievementsFetcher();
         this.init();
     }
 
@@ -26,7 +31,7 @@ export class CvRouter {
         this.router.get("/", (req: Request, res: Response) => {
             logger.debug("Creating CV");
 
-            const whenFetchedData = Observable.forkJoin(this.experiencesFetcher.WhenFetchedExperiences, this.educationsFetcher.WhenFetchedEducations);
+            const whenFetchedData = Observable.forkJoin(this.experiencesFetcher.WhenFetchedExperiences, this.educationsFetcher.WhenFetchedEducations, this.skillsFetcher.WhenFetchedSkills, this.achievementsFetcher.WhenFetchedAchievements);
 
             whenFetchedData.subscribe((data) => {
                 const doc = this.documentCreator.create(data);
