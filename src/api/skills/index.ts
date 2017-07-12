@@ -5,12 +5,18 @@ import * as logger from "winston";
 import { Observable } from "rxjs/Rx";
 import { ImageFetcher } from "./image-fetcher";
 import { SkillsFetcher } from "./skill-fetcher";
+import { ISkillDocument } from "./skill-model";
+
+interface ISkillCombinedResult {
+    image: GoogleImageResult;
+    document: ISkillDocument;
+}
 
 export class SkillsRouter {
     public router: Router;
     private skillsFetcher: SkillsFetcher;
     private imageFetcher: ImageFetcher;
-    private combinedObservable: Observable<any>;
+    private combinedObservable: Observable<ISkillCombinedResult[]>;
 
     constructor(config: IConfig) {
         this.router = Router();
@@ -18,7 +24,7 @@ export class SkillsRouter {
         this.imageFetcher = new ImageFetcher(config.googleSearch);
 
         this.combinedObservable = this.skillsFetcher.WhenFetchedSkills.flatMap((skills) => {
-            const observables: Observable<any>[] = [];
+            const observables: Observable<ISkillCombinedResult>[] = [];
             skills.forEach((skill) => {
                 observables.push(this.imageFetcher.findImage(skill.name).map((image) => {
                     return {
