@@ -1,4 +1,5 @@
 import { Request, Response, Router } from "express";
+import * as request from "request";
 import * as logger from "winston";
 
 import { Observable } from "rxjs/Rx";
@@ -22,7 +23,7 @@ export class SkillsRouter {
                 observables.push(this.imageFetcher.findImage(skill.name).map((image) => {
                     return {
                         image: image,
-                        name: skill.name,
+                        document: skill,
                     };
                 }));
             });
@@ -44,6 +45,17 @@ export class SkillsRouter {
                     message: "Something went wrong with the server",
                 };
                 res.status(500).send(errorResponse);
+            });
+        });
+
+        this.router.get("/:id/image", (req: Request, res: Response) => {
+            const skillId = req.params.id as string;
+            this.skillsFetcher.WhenFetchedSkills.map((skills) => {
+                return skills.find((skill) => skill._id.toString() === skillId).name;
+            }).flatMap((skillName) => {
+                return this.imageFetcher.findImage(skillName);
+            }).subscribe((image) => {
+                request.get(image.url).pipe(res);
             });
         });
     }
