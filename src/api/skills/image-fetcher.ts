@@ -19,7 +19,7 @@ export class ImageFetcher {
             size: "medium",
         })).map((images) => {
             return images[0];
-        });
+        }).retry();
 
         this.observables.set(searchTerm, observable);
 
