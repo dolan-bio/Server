@@ -56,12 +56,24 @@ export class SkillsRouter {
 
         this.router.get("/:id/image", (req: Request, res: Response) => {
             const skillId = req.params.id as string;
+
             this.skillsFetcher.WhenFetchedSkills.map((skills) => {
                 return skills.find((skill) => skill._id.toString() === skillId).name;
             }).flatMap((skillName) => {
                 return this.imageFetcher.findImage(skillName);
-            }).subscribe((image) => {
-                request.get(image.url).pipe(res);
+            }).flatMap((image) => {
+                const getAsObservable = Observable.bindCallback<[Error, request.RequestResponse, Buffer]>(request.get);
+                return getAsObservable({
+                    url: image.url,
+                    encoding: null,
+                }).map(([err, response, body]) => {
+                    const type = response.headers["content-type"];
+                    const prefix = "data:" + type + ";base64,";
+                    const base64 = body.toString("base64");
+                    return prefix + base64;
+                });
+            }).subscribe((base64) => {
+                res.status(200).send(base64);
             });
         });
     }
