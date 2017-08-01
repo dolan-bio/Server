@@ -18,6 +18,7 @@ export class ImageFetcher {
         const observable = Observable.fromPromise<GoogleImages.Image[]>(this.googleImageClient.search(`${searchTerm} logo transparent`, {
             size: "medium",
         })).map((images) => {
+            console.log(images[0]);
             return images[0];
         }).retry();
 
