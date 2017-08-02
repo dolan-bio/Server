@@ -15,7 +15,6 @@ export class RankFetcher {
         this.rank$ = Observable.forkJoin(summary$, contributions$, (summary, contributions) => {
             return { summary, contributions };
         }).map((data) => {
-            console.log(data);
             return this.getRank(data.summary, data.contributions);
         });
     }
@@ -32,10 +31,7 @@ export class RankFetcher {
         const maxExponant = Math.pow(Math.E, doc.d * doc.contributions.highest);
         const yMaxContributions = coefficient * maxExponant;
 
-        console.log(yMaxContributions);
-        console.log(yMyContributions);
-
-        return yMaxContributions - yMyContributions;
+        return Math.ceil(yMaxContributions - yMyContributions);
     }
 
     private fetchContributions(username: string): Observable<number> {
@@ -59,7 +55,7 @@ export class RankFetcher {
 
             const contributions: number[] = [];
 
-            $("rect").each(function (): void {
+            $("rect").each(function(): void {
                 const count = $(this).attr("data-count");
                 contributions.push(parseInt(count, 10));
             });
