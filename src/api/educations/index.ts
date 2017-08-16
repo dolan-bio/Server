@@ -17,7 +17,7 @@ export class EducationsRouter {
     public init(): void {
         this.router.get("/", (req: Request, res: Response) => {
             logger.debug("Getting educations");
-            this.educationsFetcher.WhenFetchedEducations.subscribe((data) => {
+            this.educationsFetcher.Educations$.subscribe((data) => {
                 res.status(200).send(data);
             }, (err) => {
                 logger.error(err);

@@ -31,7 +31,7 @@ export class CvRouter {
         this.router.get("/", (req: Request, res: Response) => {
             logger.debug("Creating CV");
 
-            const cv$ = Observable.forkJoin(this.experiencesFetcher.WhenFetchedExperiences, this.educationsFetcher.Educations$, this.skillsFetcher.Skills$, this.achievementsFetcher.Achievements$);
+            const cv$ = Observable.forkJoin(this.experiencesFetcher.Experiences$, this.educationsFetcher.Educations$, this.skillsFetcher.Skills$, this.achievementsFetcher.Achievements$);
 
             cv$.subscribe((data) => {
                 const doc = this.documentCreator.create(data);

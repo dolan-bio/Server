@@ -22,7 +22,7 @@ export class SkillsRouter {
         this.skillsFetcher = new SkillsFetcher();
         this.imageFetcher = new ImageFetcher(config.googleSearch);
 
-        this.combinedObservable = this.skillsFetcher.WhenFetchedSkills.flatMap((skills) => {
+        this.combinedObservable = this.skillsFetcher.Skills$.flatMap((skills) => {
             const observables: Observable<ISkillCombinedResult>[] = [];
             skills.forEach((skill) => {
                 observables.push(this.imageFetcher.findImage(skill.name).flatMap((image) => {

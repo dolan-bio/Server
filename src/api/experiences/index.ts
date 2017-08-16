@@ -17,7 +17,7 @@ export class ExperiencesRouter {
     public init(): void {
         this.router.get("/", (req: Request, res: Response) => {
             logger.debug("Getting experiences");
-            this.experiencesFetcher.WhenFetchedExperiences.subscribe((data) => {
+            this.experiencesFetcher.Experiences$.subscribe((data) => {
                 res.status(200).send(data);
             }, (err) => {
                 logger.error(err);
