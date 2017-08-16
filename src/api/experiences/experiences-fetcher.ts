@@ -4,10 +4,10 @@ import * as logger from "winston";
 import { Experience, IExperienceDocument } from "./experience-model";
 
 export class ExperiencesFetcher {
-    private whenFetchedExperiences: Observable<IExperienceDocument[]>;
+    private experiences$: Observable<IExperienceDocument[]>;
 
     constructor() {
-        this.whenFetchedExperiences = Observable.fromPromise<IExperienceDocument[]>(Experience.find()).map((experiences) => {
+        this.experiences$ = Observable.fromPromise<IExperienceDocument[]>(Experience.find()).map((experiences) => {
             return experiences.sort((a, b) => {
                 if (a.endDate === undefined) {
                     return -1;
@@ -25,8 +25,8 @@ export class ExperiencesFetcher {
         });
     }
 
-    public get WhenFetchedExperiences(): Observable<IExperienceDocument[]> {
+    public get Experiences$(): Observable<IExperienceDocument[]> {
         logger.debug("Getting experiences Observable");
-        return this.whenFetchedExperiences;
+        return this.experiences$;
     }
 }

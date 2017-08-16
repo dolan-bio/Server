@@ -31,7 +31,7 @@ export class GitHubRouter {
     public init(): void {
         this.router.get("/event", (req: Request, res: Response) => {
             logger.debug("Getting latest event");
-            this.eventsFetcher.WhenFetchedLastEvent.subscribe((data) => {
+            this.eventsFetcher.LastEvent$.subscribe((data) => {
                 res.status(200).json(data);
             }, (err) => {
                 logger.error(err);
@@ -44,7 +44,7 @@ export class GitHubRouter {
 
         this.router.get("/profile", (req: Request, res: Response) => {
             logger.debug("Getting profile");
-            this.profileFetcher.WhenFetchedContributions.subscribe((data) => {
+            this.profileFetcher.Contributions$.subscribe((data) => {
                 res.status(200).json(data);
             }, (err) => {
                 logger.error(err);

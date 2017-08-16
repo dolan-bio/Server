@@ -5,11 +5,11 @@ import * as logger from "winston";
 const CONTRIBUTION_URL = "https://opensourcecontributo.rs/api/user/dolanmiu";
 
 export class ContributionsFetcher {
-    private whenFetchedContributions: Observable<ContributionStatistics>;
+    private contributions$: Observable<ContributionStatistics>;
 
     constructor() {
         const getAsObservable = Observable.bindCallback<[Error, request.RequestResponse, OpenSourceContributorsResponse]>(request.get);
-        this.whenFetchedContributions = getAsObservable({
+        this.contributions$ = getAsObservable({
             url: CONTRIBUTION_URL,
             json: true,
         }).map(([err, response, body]) => {
@@ -21,8 +21,8 @@ export class ContributionsFetcher {
         });
     }
 
-    public get WhenFetchedContributions(): Observable<ContributionStatistics> {
+    public get Contributions$(): Observable<ContributionStatistics> {
         logger.debug("Getting contribution Observable");
-        return this.whenFetchedContributions;
+        return this.contributions$;
     }
 }

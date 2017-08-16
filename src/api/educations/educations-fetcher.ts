@@ -4,10 +4,10 @@ import * as logger from "winston";
 import { Education, IEducationDocument } from "./education-model";
 
 export class EducationsFetcher {
-    private whenFetchedEducations: Observable<IEducationDocument[]>;
+    private educations$: Observable<IEducationDocument[]>;
 
     constructor() {
-        this.whenFetchedEducations = Observable.fromPromise<IEducationDocument[]>(Education.find()).map((educations) => {
+        this.educations$ = Observable.fromPromise<IEducationDocument[]>(Education.find()).map((educations) => {
             return educations.sort((a, b) => {
                 if (a.endDate === undefined) {
                     return -1;
@@ -25,8 +25,8 @@ export class EducationsFetcher {
         });
     }
 
-    public get WhenFetchedEducations(): Observable<IEducationDocument[]> {
+    public get Educations$(): Observable<IEducationDocument[]> {
         logger.debug("Getting Educations Observable");
-        return this.whenFetchedEducations;
+        return this.educations$;
     }
 }

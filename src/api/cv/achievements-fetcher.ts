@@ -4,14 +4,14 @@ import * as logger from "winston";
 import { Achievement, IAchievementDocument } from "./achievement-model";
 
 export class AchievementsFetcher {
-    private whenFetchedAchievements: Observable<IAchievementDocument[]>;
+    private achievements$: Observable<IAchievementDocument[]>;
 
     constructor() {
-        this.whenFetchedAchievements = Observable.fromPromise<IAchievementDocument[]>(Achievement.find());
+        this.achievements$ = Observable.fromPromise<IAchievementDocument[]>(Achievement.find());
     }
 
-    public get WhenFetchedAchievements(): Observable<IAchievementDocument[]> {
+    public get Achievements$(): Observable<IAchievementDocument[]> {
         logger.debug("Getting Achievements Observable");
-        return this.whenFetchedAchievements;
+        return this.achievements$;
     }
 }

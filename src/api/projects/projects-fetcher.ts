@@ -4,14 +4,14 @@ import * as logger from "winston";
 import { IProjectDocument, Project } from "./project-model";
 
 export class ProjectsFetcher {
-    private whenFetchedProjects: Observable<IProjectDocument[]>;
+    private projects$: Observable<IProjectDocument[]>;
 
     constructor() {
-        this.whenFetchedProjects = Observable.fromPromise<IProjectDocument[]>(Project.find());
+        this.projects$ = Observable.fromPromise<IProjectDocument[]>(Project.find());
     }
 
-    public get WhenFetchedProjects(): Observable<IProjectDocument[]> {
+    public get Projects$(): Observable<IProjectDocument[]> {
         logger.debug("Getting projects Observable");
-        return this.whenFetchedProjects;
+        return this.projects$;
     }
 }

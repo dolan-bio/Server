@@ -17,7 +17,7 @@ export class ProjectsRouter {
     public init(): void {
         this.router.get("/", (req: Request, res: Response) => {
             logger.debug("Getting projects");
-            this.projectsFetcher.WhenFetchedProjects.subscribe((data) => {
+            this.projectsFetcher.Projects$.subscribe((data) => {
                 res.status(200).send(data);
             }, (err) => {
                 logger.error(err);
