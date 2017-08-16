@@ -13,12 +13,20 @@ export class ContributionsFetcher {
             url: CONTRIBUTION_URL,
             json: true,
         }).map(([err, response, body]) => {
+            if (err) {
+                throw new Error(err.toString());
+            }
+
+            if (response.statusCode !== 200) {
+                throw new Error(`Status code: ${response.statusCode} for github profile fetch`);
+            }
+
             return {
                 contributionCount: body.eventCount,
                 repoCount: body.repos.length,
                 lineCount: body.eventCount * 30,
             };
-        });
+        }).retry(5);
     }
 
     public get Contributions$(): Observable<ContributionStatistics> {

@@ -11,7 +11,7 @@ export class EventsFetcher {
             username: "dolanmiu",
         }).map(([err, res]) => {
             return res.data[0];
-        });
+        }).retry();
     }
 
     public get LastEvent$(): Observable<GitHubEvent> {
