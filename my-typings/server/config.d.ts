@@ -5,7 +5,6 @@ interface GoogleSearchConfig {
 
 interface IConfig {
     port: string | number;
-    baseUrl: string;
     mongoUri: string;
     github: {
         token: string,

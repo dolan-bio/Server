@@ -1,6 +1,5 @@
 export const ProductionConfig: IConfig = {
     port: process.env.PORT || 9000,
-    baseUrl: process.env.BASE_URL,
     mongoUri: process.env.MONGODB_URI,
     github: {
         token: process.env.GITHUB_TOKEN,
