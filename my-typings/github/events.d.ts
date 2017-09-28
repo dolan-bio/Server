@@ -1,6 +1,6 @@
-declare type EventType = "PushEvent" | "IssueCommentEvent" | "IssuesEvent";
+type EventType = "PushEvent" | "IssueCommentEvent" | "IssuesEvent";
 
-declare interface GitHubEvent {
+interface GitHubEvent {
     id: string,
     type: EventType,
     actor: {
@@ -28,7 +28,7 @@ declare interface GitHubEvent {
     }
 }
 
-declare interface GitHubEventsResponse {
+interface GitHubEventsResponse {
     data: GitHubEvent[],
     meta: {
         "x-ratelimit-limit": string,

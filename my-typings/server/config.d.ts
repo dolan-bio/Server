@@ -1,9 +1,9 @@
-declare interface GoogleSearchConfig {
+interface GoogleSearchConfig {
     customSearchEngineId: string;
     apiKey: string;
 }
 
-declare interface IConfig {
+interface IConfig {
     port: string | number;
     baseUrl: string;
     mongoUri: string;

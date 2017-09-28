@@ -1,3 +1,3 @@
-declare interface ServerError {
+interface ServerError {
     message: string;
 }
