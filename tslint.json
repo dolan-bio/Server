@@ -43,6 +43,7 @@
         "multiline": "always",
         "singleline": "never"
       }
-    ]
+    ],
+    "no-submodule-imports": false
   }
 }
